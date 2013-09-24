@@ -14,13 +14,10 @@ puts
 tweet = Twitter.user_timeline(screen_name).first
 
 amigos = Twitter.friends(screen_name)
-
+amigos.each { |a| a_user2 = Twitter.user(a)
+				print "Username   : #{a_user2.name} \n"}
 				
-amigos.each do |a|
-		a_user2 = Twitter.user(a)
-        print "Username   : #{a_user2.name} \n"
-		print "numero seguidores   : #{Twitter.followers(a_user2.name)} \n"
-end
+
 
 if tweet
   puts "Tweet text : #{tweet.text }"
