@@ -1,42 +1,26 @@
 require 'twitter'
 require './configure'
 
-screen_name = ARGV[0] || 'Adrihg89'
-a_user = Twitter.user(screen_name)
-
-puts "Username   : #{a_user.screen_name}"
-puts "Name       : #{a_user.name}"
-puts "Location   : #{a_user.location}"
-puts "URL        : #{a_user.url}" if a_user.url
-puts "Verified   : #{a_user.verified}"
-puts "Seguidores   : #{a_user.followers_count}"
-puts
-
-tweet = Twitter.user_timeline(screen_name).first
-
-amigos = Twitter.friends(screen_name)
+nombre_usuario = ARGV[0] || 'Adrihg89'
+lon_lista = (ARGV[1] || 10).to_i
 lista_amigos = {}
-#amigos.sort! { |a,b| a_user2 = Twitter.user(a), a_user3 = Twitter.user(b), a_user2.follower_count <=> a_user3.follower_count }
-amigos.each do |a|
-		#print "Username   : #{a.name} \n"
-		a_user2 = Twitter.user(a)
-		lista_amigos[a_user2.screen_name] = a_user2.followers_count
-		#print "Username: #{a_user2.name} Seguidores: #{a_user2.followers_count} \n"
-		#a_user2 = Twitter.user(a)
-        #print "Username   : #{a_user2.name} \n"
+
+a_user = Twitter.user(nombre_usuario)
+amigos = Twitter.friend_ids(nombre_usuario)
+lon_lista = lon_lista - 1
+amigos = amigos.ids[0..lon_lista]
+
+# Bucle en el que recorremos nuestra variable amigos para ir creando el hash con key=nombre del amigo y value=numero de seguidores de ese amigo
+for amigo in amigos
+		a_user2 = Twitter.user(amigo) # Obtenemos la info de cada amigo
+		lista_amigos[a_user2.screen_name] = a_user2.followers_count # Creamos el hash
 end
 
-#lista_amigos.sort_by { |x,y| y }
-#lista_amigos.sort{ |a,b| a_user2 = Twitter.user(a), a_user3 = Twitter.user(b), a_user2.follower_count <=> a_user3.follower_count }
+#Ordenamos el hash de mayor a menor por el campo numero de seguidores
+lista_amigos.sort_by {|nombre_amigo,num_seguidores| -num_seguidores}.each do |nombre,num|
 
-#lista_amigos.each do |usu,num_seguidores|
-#puts "usuario: #{usu} seguidores: #{num_seguidores}"
-#end
+	puts "Usuario: #{nombre} Seguidores: #{num}"
 
-lista_amigos.sort_by {|usu,num_seguidores| -num_seguidores}
-
-lista_amigos.each do |usu,num_seguidores|
-	puts "usuario: #{usu} seguidores: #{num_seguidores}"
 end
 
 
