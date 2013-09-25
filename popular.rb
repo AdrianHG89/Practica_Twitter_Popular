@@ -6,9 +6,9 @@ lon_lista = (ARGV[1] || 10).to_i
 lista_amigos = {}
 
 a_user = Twitter.user(nombre_usuario)
-amigos = Twitter.friend_ids(nombre_usuario)
-lon_lista = lon_lista - 1
-amigos = amigos.ids[0..lon_lista]
+amigos = Twitter.friend_ids(nombre_usuario) # Conectamos con el Twitter del usuario indicado para obtener su info.
+lon_lista = lon_lista - 1 # Le quitamos uno al limite de ususarios porque empieza desde 0.
+amigos = amigos.ids[0..lon_lista] # Hacemos que nuestra variable solo tenga el numero de usuario que ha indicado el usuario a la hora de la ejecucion.
 
 # Bucle en el que recorremos nuestra variable amigos para ir creando el hash con key=nombre del amigo y value=numero de seguidores de ese amigo
 for amigo in amigos
