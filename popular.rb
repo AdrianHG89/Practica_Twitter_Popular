@@ -6,6 +6,7 @@ lon_lista = (ARGV[1] || 10).to_i
 lista_amigos = {}
 
 a_user = Twitter.user(nombre_usuario)
+puts "Username   : #{a_user.screen_name}"
 amigos = Twitter.friend_ids(nombre_usuario) # Conectamos con el Twitter del usuario indicado para obtener su info.
 lon_lista = lon_lista - 1 # Le quitamos uno al limite de ususarios porque empieza desde 0.
 amigos = amigos.ids[0..lon_lista] # Hacemos que nuestra variable solo tenga el numero de usuario que ha indicado el usuario a la hora de la ejecucion.
