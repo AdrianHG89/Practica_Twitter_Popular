@@ -20,7 +20,6 @@ end
 lista_amigos.sort_by {|nombre_amigo,num_seguidores| -num_seguidores}.each do |nombre,num|
 
 	puts "Usuario: #{nombre} Seguidores: #{num}"
-
 end
 
 
