@@ -1,26 +1,30 @@
 require 'twitter'
 require './configure'
 
-screen_name = ARGV[0] || 'timoreilly'
-a_user = Twitter.user(screen_name)
+nombre_usuario = ARGV[0] || 'Adrihg89'
+lon_lista = (ARGV[1] || 10).to_i
+lista_amigos = {}
 
-puts "Username   : #{a_user.screen_name}"
-puts "Name       : #{a_user.name}"
-puts "Location   : #{a_user.location}"
-puts "URL        : #{a_user.url}" if a_user.url
-puts "Verified   : #{a_user.verified}"
-puts
+a_user = Twitter.user(nombre_usuario)
+amigos = Twitter.friend_ids(nombre_usuario) # Conectamos con el Twitter del usuario indicado para obtener su info.
+lon_lista = lon_lista - 1 # Le quitamos uno al limite de ususarios porque empieza desde 0.
+amigos = amigos.ids[0..lon_lista] # Hacemos que nuestra variable solo tenga el numero de usuario que ha indicado el usuario a la hora de la ejecucion.
 
-tweet = Twitter.user_timeline(screen_name).first
-
-amigos = Twitter.friends(screen_name)
-amigos.each { |a| a_user2 = Twitter.user(a)
-				print "Username   : #{a_user2.name} \n"}
-				
-
-
-if tweet
-  puts "Tweet text : #{tweet.text }"
-  puts "Tweet time : #{tweet.created_at}"
-  puts "Tweet ID   : #{tweet.id}"
+# Bucle en el que recorremos nuestra variable amigos para ir creando el hash con key=nombre del amigo y value=numero de seguidores de ese amigo
+for amigo in amigos
+		a_user2 = Twitter.user(amigo) # Obtenemos la info de cada amigo
+		lista_amigos[a_user2.screen_name] = a_user2.followers_count # Creamos el hash
 end
+
+#Ordenamos el hash de mayor a menor por el campo numero de seguidores
+lista_amigos.sort_by {|nombre_amigo,num_seguidores| -num_seguidores}.each do |nombre,num|
+
+	puts "Usuario: #{nombre} Seguidores: #{num}"
+end
+
+
+
+
+
+
+
