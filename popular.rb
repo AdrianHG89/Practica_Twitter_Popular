@@ -27,10 +27,16 @@ amigos.each do |a|
 end
 
 #lista_amigos.sort_by { |x,y| y }
-lista_amigos.sort{ |a,b| a_user2 = Twitter.user(a), a_user3 = Twitter.user(b), a_user2.follower_count <=> a_user3.follower_count }
+#lista_amigos.sort{ |a,b| a_user2 = Twitter.user(a), a_user3 = Twitter.user(b), a_user2.follower_count <=> a_user3.follower_count }
+
+#lista_amigos.each do |usu,num_seguidores|
+#puts "usuario: #{usu} seguidores: #{num_seguidores}"
+#end
+
+lista_amigos.sort_by {|usu,num_seguidores| -num_seguidores}
 
 lista_amigos.each do |usu,num_seguidores|
-puts "usuario: #{usu} seguidores: #{num_seguidores}"
+	puts "usuario: #{usu} seguidores: #{num_seguidores}"
 end
 
 
