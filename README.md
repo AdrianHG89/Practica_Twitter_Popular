@@ -10,6 +10,8 @@ ruby popular.rb [nombre_usuario] [num_maximo_amigos]
 
 Si se ejecuta sin parametros cogera los datos por defecto.
 
+Si se ejecuta sin el parametro num_maximo_amigos cogera el valor por defecto
+
 Usando rake
 
 No funciona bien siempre coge las opciones por defecto. Pero no entiendo muy bien porque.
